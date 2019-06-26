@@ -31,9 +31,16 @@ public class ContaPage extends BasePage{
 	public void novaConta() {
 		clicarBotao(By.xpath("//a[.='Novo usuário?']"));
 	}
+	
 	public void editarConta(String nomeAtual, String nomeNovo) {
 		clicarBotaoEditTabela("Conta", nomeAtual, "Ações", "tabelaContas");
 		escrever("nome", nomeNovo);
+//		verificar mensagem após edição
+	}
+	
+	public void removerConta(String conta) {
+		clicarBotaoRemoveTabela("Conta", conta, "Ações", "tabelaContas");
+//		verificar mensagem após exclusão
 	}
 
 }
