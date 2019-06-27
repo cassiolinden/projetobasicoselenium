@@ -1,16 +1,19 @@
 package br.rs.cassiolinden.test;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.rs.cassiolinden.core.BaseTest;
 import br.rs.cassiolinden.pages.ContaPage;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ContaTest extends BaseTest{
 	private ContaPage page = new ContaPage();
 	
 	@Test
-	public void criarConta() {
+	public void test1_criarConta() {
 		page.clicarAdicionarConta();
 		page.setNome("Conta adicionada de forma automática");
 		page.salvar();
@@ -18,26 +21,19 @@ public class ContaTest extends BaseTest{
 	}
 	
 	@Test
-	public void alterarConta() {
+	public void test2_alterarConta() {
 		page.clicarListarContas();
 		page.clicarAlterarConta("Conta adicionada de forma automática");
-		page.setNome("Segunda conta editada de forma automática");
+		page.setNome("Conta editada de forma automática");
 		page.salvar();
 		Assert.assertEquals("Conta alterada com sucesso!", page.obterMensagemSucesso());
 	}
 	
 	@Test
-	public void criarContaMesmoNome() {
+	public void test3_criarContaMesmoNome() {
 		page.clicarAdicionarConta();
-		page.setNome("Conta adicionada de forma automática");
+		page.setNome("Conta editada de forma automática");
 		page.salvar();
 		Assert.assertEquals("Já existe uma conta com esse nome!", page.obterMensagemErro());
-	}
-	
-	@Test
-	public void removerContaComMovimentacao() {
-		page.clicarListarContas();
-		page.removerConta("Conta editada de forma automática");
-		Assert.assertEquals("Conta em uso na movimentações", page.obterMensagemErro());
 	}
 }

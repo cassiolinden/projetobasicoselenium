@@ -12,7 +12,7 @@ public class ResumoPage extends BasePage {
 	
 	public void removerMovimentacao() {
 //		obterCelula("Descrição", movimentacao, "Ações", "tabelaExtrato").findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-remove']")).click();
-		clicarBotao(By.xpath("//span[@class='glyphicon glyphicon-remove']"));
+		clicarBotao(By.xpath("//span[@class='glyphicon glyphicon-remove-circle']"));
 	}
 	
 	/*adequação ao padrão page objects explicado pelo professor*/

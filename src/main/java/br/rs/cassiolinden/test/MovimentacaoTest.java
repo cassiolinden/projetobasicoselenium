@@ -5,18 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.rs.cassiolinden.core.BaseTest;
 import br.rs.cassiolinden.pages.MovimentacaoPage;
 import br.rs.cassiolinden.utils.DataUtils;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MovimentacaoTest extends BaseTest{
 	
 	MovimentacaoPage page = new MovimentacaoPage();
 	
 	@Test
-	public void inserirMovimentacao() {
+	public void test1_inserirMovimentacao() {
 		page.clicarCriarMovimentacao();
 		page.setTipoMovReceita();
 		page.setDataMovimentacao("26/06/2019");
@@ -32,7 +35,7 @@ public class MovimentacaoTest extends BaseTest{
 	
 	/*inserido após correção do professor*/
 	@Test
-	public void testarTodosCamposObrigatorios() {
+	public void test2_testarTodosCamposObrigatorios() {
 		page.clicarCriarMovimentacao();
 		page.salvar();
 		List<String> erros = page.obterErros();
@@ -41,11 +44,11 @@ public class MovimentacaoTest extends BaseTest{
 				"Data do pagamento é obrigatório",
 				"Descrição é obrigatório",
 				"Interessado é obrigatório",
-				"Valor deve ser um número",
-				"Valor é obrigatório")));
+				"Valor é obrigatório",
+				"Valor deve ser um número")));
 		Assert.assertEquals(6, erros.size());
 	}
-	
+	/*
 	@Test
 	public void inserirMovimentacaoSemDataMov() {
 		page.clicarCriarMovimentacao();
@@ -130,8 +133,9 @@ public class MovimentacaoTest extends BaseTest{
 
 	}
 	
+	*/
 	@Test
-	public void inserirMovimentacaoFutura() {
+	public void test3_inserirMovimentacaoFutura() {
 		page.clicarCriarMovimentacao();
 		
 		/*método e classe criados após correção com o professor*/

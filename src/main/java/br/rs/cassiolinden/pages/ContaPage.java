@@ -38,7 +38,7 @@ public class ContaPage extends BasePage{
 	}
 	
 	public void removerConta(String conta) {
-		obterCelula("Conta", conta, "Ações", "tabelaContas").findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-remove']")).click();
+		obterCelula("Conta", conta, "Ações", "tabelaContas").findElement(By.xpath(".//span[@class='glyphicon glyphicon-remove-circle']")).click();
 //		verificar mensagem após exclusão
 	}
 	
