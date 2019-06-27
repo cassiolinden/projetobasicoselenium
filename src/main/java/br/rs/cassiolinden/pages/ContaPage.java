@@ -10,12 +10,12 @@ public class ContaPage extends BasePage{
 		clicarBotao(By.xpath("//a[@class='dropdown-toggle']"));
 	}
 	
-	public void adicionarConta() {
+	public void clicarAdicionarConta() {
 		clicarMenuConta();
 		clicarBotao(By.xpath("//a[.='Adicionar']"));
 	}
 	
-	public void listarContas() {
+	public void clicarListarContas() {
 		clicarMenuConta();
 		clicarBotao(By.xpath("//a[.='Listar']"));
 	}
@@ -32,15 +32,25 @@ public class ContaPage extends BasePage{
 		clicarBotao(By.xpath("//a[.='Novo usuário?']"));
 	}
 	
-	public void editarConta(String nomeAtual, String nomeNovo) {
-		clicarBotaoEditTabela("Conta", nomeAtual, "Ações", "tabelaContas");
-		escrever("nome", nomeNovo);
+	public void clicarAlterarConta(String nomeAtual) {
+		obterCelula("Conta", nomeAtual, "Ações", "tabelaContas").findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-edit']")).click();
 //		verificar mensagem após edição
 	}
 	
 	public void removerConta(String conta) {
-		clicarBotaoRemoveTabela("Conta", conta, "Ações", "tabelaContas");
+		obterCelula("Conta", conta, "Ações", "tabelaContas").findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-remove']")).click();
 //		verificar mensagem após exclusão
+	}
+	
+	/*adequação ao padrão page objects explicado pelo professor*/
+	public String obterMensagemSucesso() {
+		return obterTexto(By.xpath("//div[@class='alert alert-success']"));
+	}
+	
+	
+	/*adequação ao padrão page objects explicado pelo professor*/
+	public String obterMensagemErro() {
+		return obterTexto(By.xpath("//div[@class='alert alert-danger']"));
 	}
 
 }

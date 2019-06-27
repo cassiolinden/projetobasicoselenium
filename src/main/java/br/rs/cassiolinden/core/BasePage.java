@@ -115,6 +115,10 @@ public class BasePage {
 		getDriver().findElement(By.id(id)).click();
 	}
 	
+	public void clicarBotaoPorTexto(String texto) {
+		clicarBotao(By.xpath("//button[.='"+texto+"']"));
+	}
+	
 	public String obterValueElemento(String id) {
 		return getDriver().findElement(By.id(id)).getAttribute("value");
 	}
@@ -186,7 +190,7 @@ public class BasePage {
 	
 	/********* Tabela ************/
 	
-	public void clicarBotaoEditTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
+	public WebElement obterCelula(String colunaBusca, String valor, String colunaBotao, String idTabela) {
 		//procurar coluna do registro
 		WebElement tabela = getDriver().findElement(By.xpath("//*[@id='"+idTabela+"']")); 
 		int idColuna = obterIndiceColunaTabela(colunaBusca, tabela);
@@ -199,24 +203,18 @@ public class BasePage {
 		
 		//clicar no botao da celula encontrada
 		WebElement celula = tabela.findElement(By.xpath(".//tr["+idLinha+"]/td["+idColunaBotao+"]"));
-		celula.findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-edit']")).click();
+		return celula;
 	}
 	
-	public void clicarBotaoRemoveTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
-		//procurar coluna do registro
-		WebElement tabela = getDriver().findElement(By.xpath("//*[@id='"+idTabela+"']")); 
-		int idColuna = obterIndiceColunaTabela(colunaBusca, tabela);
-		
-		//encontrar linha do registro
-		int idLinha = obterIndiceLinhaTabela(valor, tabela, idColuna);
-		
-		//procurar coluna do botao
-		int idColunaBotao = obterIndiceColunaTabela(colunaBotao, tabela);
-		
-		//clicar no botao da celula encontrada
-		WebElement celula = tabela.findElement(By.xpath(".//tr["+idLinha+"]/td["+idColunaBotao+"]"));
-		celula.findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-remove-circle']")).click();
-	}
+//	public void clicarBotao(String colunaBusca, String valor, String colunaBotao, String idTabela) {
+//		WebElement celula = obterCelula(colunaBusca, valor, colunaBotao, idTabela);
+//		celula.findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-edit']")).click();
+//	}
+//	
+//	public void clicarBotaoRemoveTabela(String colunaBusca, String valor, String colunaBotao, String idTabela) {
+//		WebElement celula = obterCelula(colunaBusca, valor, colunaBotao, idTabela);
+//		celula.findElement(By.xpath(".//a//span[@class='glyphicon glyphicon-remove-circle']")).click();
+//	}
 
 	protected int obterIndiceLinhaTabela(String valor, WebElement tabela, int idColuna) {
 		List<WebElement> linhas = tabela.findElements(By.xpath("./tbody/tr/td["+idColuna+"]"));

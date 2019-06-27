@@ -2,7 +2,6 @@ package br.rs.cassiolinden.test;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 import br.rs.cassiolinden.core.BaseTest;
 import br.rs.cassiolinden.pages.ContaPage;
@@ -12,25 +11,33 @@ public class ContaTest extends BaseTest{
 	
 	@Test
 	public void criarConta() {
-		page.adicionarConta();
+		page.clicarAdicionarConta();
 		page.setNome("Conta adicionada de forma automática");
 		page.salvar();
-		Assert.assertEquals("Conta adicionada com sucesso!", page.obterTexto(By.xpath("//div[@class='alert alert-success']")));
+		Assert.assertEquals("Conta adicionada com sucesso!", page.obterMensagemSucesso());
 	}
 	
 	@Test
 	public void alterarConta() {
-		page.listarContas();
-		page.editarConta("Conta adicionada de forma automática", "Conta editada de forma automática");
+		page.clicarListarContas();
+		page.clicarAlterarConta("Conta adicionada de forma automática");
+		page.setNome("Segunda conta editada de forma automática");
 		page.salvar();
-		Assert.assertEquals("Conta alterada com sucesso!", page.obterTexto(By.xpath("//div[@class='alert alert-success']")));
+		Assert.assertEquals("Conta alterada com sucesso!", page.obterMensagemSucesso());
 	}
 	
 	@Test
 	public void criarContaMesmoNome() {
-		page.adicionarConta();
+		page.clicarAdicionarConta();
 		page.setNome("Conta adicionada de forma automática");
 		page.salvar();
-		Assert.assertEquals("Já existe uma conta com esse nome!", page.obterTexto(By.xpath("//div[@class='alert alert-danger']")));
-	}	
+		Assert.assertEquals("Já existe uma conta com esse nome!", page.obterMensagemErro());
+	}
+	
+	@Test
+	public void removerContaComMovimentacao() {
+		page.clicarListarContas();
+		page.removerConta("Conta editada de forma automática");
+		Assert.assertEquals("Conta em uso na movimentações", page.obterMensagemErro());
+	}
 }

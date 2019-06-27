@@ -1,12 +1,17 @@
 package br.rs.cassiolinden.pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import br.rs.cassiolinden.core.BasePage;
+import br.rs.cassiolinden.core.DriverFactory;
 
 public class MovimentacaoPage extends BasePage{
 	
-	public void criarMovimentacao() {
+	public void clicarCriarMovimentacao() {
 		clicarBotao(By.xpath("//a[.='Criar Movimentação']"));
 	}
 	
@@ -37,17 +42,9 @@ public class MovimentacaoPage extends BasePage{
 	public void setValor(String valor) {
 		escrever("valor", valor);
 	}
-	
-	public void setContaAddManual() {
-		clicarBotao(By.xpath("//select[@id='conta']/option[@value='21080']"));
-	}
-	
-	public void setContaAddAuto() {
-		clicarBotao(By.xpath("//select[@id='conta']/option[@value='21085']"));
-	}
-	
-	public void setContaEditAuto() {
-		clicarBotao(By.xpath("//select[@id='conta']/option[@value='21081']"));
+
+	public void setConta(String conta) {
+		selecionarCombo("conta", conta);
 	}
 	
 	public void setSituacaoPago() {
@@ -59,7 +56,27 @@ public class MovimentacaoPage extends BasePage{
 	}
 	
 	public void salvar() {
-		clicarBotao(By.xpath("//button[@type='submit']"));
+		clicarBotaoPorTexto("Salvar");
+	}
+	
+	/*adequação ao padrão page objects explicado pelo professor*/
+	public String obterMensagemSucesso() {
+		return obterTexto(By.xpath("//div[@class='alert alert-success']"));
+	}
+	
+	/*adequação ao padrão page objects explicado pelo professor*/
+	public String obterMensagemErro() {
+		return obterTexto(By.xpath("//div[@class='alert alert-danger']"));
+	}
+	
+	/*inserido após correção do professor*/
+	public List<String> obterErros(){
+		List<WebElement> erros = DriverFactory.getDriver().findElements(By.xpath("//div[@class='alert alert-danger']"));
+		List<String> retorno = new ArrayList<String>();
+		for(WebElement erro : erros) {
+			retorno.add(erro.getText());
+		}
+		return retorno;
 	}
 
 }

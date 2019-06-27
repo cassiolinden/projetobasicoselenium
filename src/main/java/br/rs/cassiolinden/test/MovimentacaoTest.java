@@ -1,11 +1,15 @@
 package br.rs.cassiolinden.test;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 import br.rs.cassiolinden.core.BaseTest;
 import br.rs.cassiolinden.pages.MovimentacaoPage;
+import br.rs.cassiolinden.utils.DataUtils;
 
 public class MovimentacaoTest extends BaseTest{
 	
@@ -13,63 +17,135 @@ public class MovimentacaoTest extends BaseTest{
 	
 	@Test
 	public void inserirMovimentacao() {
-		page.criarMovimentacao();
+		page.clicarCriarMovimentacao();
 		page.setTipoMovReceita();
 		page.setDataMovimentacao("26/06/2019");
 		page.setDataPagamento("26/06/2019");
 		page.setDescricao("Segunda movimentação incluída de forma automática");
 		page.setInteressado("Eu mesmo");
 		page.setValor("1000");
-		page.setContaAddAuto();
+		page.setConta("Conta editada de forma automática");
 		page.setSituacaoPago();
 		page.salvar();
-		Assert.assertEquals("Movimentação adicionada com sucesso!", page.obterTexto(By.xpath("//div[@class='alert alert-success']")));
+		Assert.assertEquals("Movimentação adicionada com sucesso!", page.obterMensagemSucesso());
+	}
+	
+	/*inserido após correção do professor*/
+	@Test
+	public void testarTodosCamposObrigatorios() {
+		page.clicarCriarMovimentacao();
+		page.salvar();
+		List<String> erros = page.obterErros();
+		Assert.assertTrue(erros.containsAll(Arrays.asList(
+				"Data da Movimentação é obrigatório",
+				"Data do pagamento é obrigatório",
+				"Descrição é obrigatório",
+				"Interessado é obrigatório",
+				"Valor deve ser um número",
+				"Valor é obrigatório")));
+		Assert.assertEquals(6, erros.size());
 	}
 	
 	@Test
 	public void inserirMovimentacaoSemDataMov() {
-		page.criarMovimentacao();
+		page.clicarCriarMovimentacao();
+		page.setDataPagamento("26/06/2019");
+		page.setDescricao("Segunda movimentação incluída de forma automática");
+		page.setInteressado("Eu mesmo");
+		page.setValor("1000");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago();
 		page.salvar();
-		Assert.assertEquals("Data da Movimentação é obrigatório", page.obterTexto(By.xpath("//div[@class='alert alert-danger']//li[.='Data da Movimentação é obrigatório']")));
+		Assert.assertEquals("Data da Movimentação é obrigatório", page.obterMensagemErro());
 	}
 	
 	@Test
 	public void inserirMovimentacaoSemDataPag() {
-//		Data do pagamento é obrigatório
+		page.clicarCriarMovimentacao();
+		page.setDataMovimentacao("26/06/2019");
+		page.setDescricao("Movimentação sem data de pagamento");
+		page.setInteressado("Eu mesmo");
+		page.setValor("1000");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Data do pagamento é obrigatório", page.obterMensagemErro());
 
 	}
 	
 	@Test
 	public void inserirMovimentacaoSemDescr() {
-//		Descrição é obrigatório
+		page.clicarCriarMovimentacao();
+		page.setDataMovimentacao("26/06/2019");
+		page.setDataPagamento("26/06/2019");
+		page.setInteressado("Eu mesmo");
+		page.setValor("1000");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Descrição é obrigatório", page.obterMensagemErro());
 
 	}
 	
 	@Test
 	public void inserirMovimentacaoSemInteressado() {
-//		Interessado é obrigatório
+		page.clicarCriarMovimentacao();
+		page.setDataMovimentacao("26/06/2019");
+		page.setDataPagamento("26/06/2019");
+		page.setDescricao("Movimentação sem interessado");
+		page.setValor("1000");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Interessado é obrigatório", page.obterMensagemErro());
 
 	}
 	
 	@Test
 	public void inserirMovimentacaoSemValor() {
-//		Valor é obrigatório
+		page.clicarCriarMovimentacao();
+		page.setDataMovimentacao("26/06/2019");
+		page.setDataPagamento("26/06/2019");
+		page.setDescricao("Movimentação sem valor");
+		page.setInteressado("Eu mesmo");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Valor é obrigatório", page.obterMensagemErro());
 
 	}
 	
 	@Test
 	public void inserirMovimentacaoValorIncorreto() {
-//		Valor deve ser um número
+		page.clicarCriarMovimentacao();
+		page.setDataMovimentacao(DataUtils.obterDataFormatada(new Date()));
+		page.setDataPagamento(DataUtils.obterDataFormatada(new Date()));
+		page.setDescricao("Movimentação com valor incorreto");
+		page.setInteressado("Eu mesmo");
+		page.setValor("eita");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Valor deve ser um número", page.obterMensagemErro());
 
 	}
 	
 	@Test
 	public void inserirMovimentacaoFutura() {
+		page.clicarCriarMovimentacao();
 		
-	}
-	
-	@Test
-	public void removerMovimentacao() {
+		/*método e classe criados após correção com o professor*/
+		Date dataFutura = DataUtils.obterDataComDiferencaDias(5);
+		
+		page.setDataMovimentacao(DataUtils.obterDataFormatada(dataFutura));
+		page.setDataPagamento(DataUtils.obterDataFormatada(dataFutura));
+		page.setDescricao("Movimentação ");
+		page.setInteressado("Eu mesmo");
+		page.setValor("1000");
+		page.setConta("Conta editada de forma automática");
+		page.setSituacaoPago(); 
+		page.salvar();
+		Assert.assertEquals("Data da Movimentação deve ser menor ou igual à data atual", page.obterMensagemErro());
 		
 	}
 
