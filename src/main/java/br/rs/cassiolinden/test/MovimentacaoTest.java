@@ -23,8 +23,11 @@ public class MovimentacaoTest extends BaseTest{
 	public void test1_inserirMovimentacao() {
 		page.clicarCriarMovimentacao();
 		page.setTipoMovReceita();
-		page.setDataMovimentacao("26/06/2019");
-		page.setDataPagamento("26/06/2019");
+		
+		Date dataAtual = DataUtils.obterDataComDiferencaDias(0);
+		
+		page.setDataMovimentacao(DataUtils.obterDataFormatada(dataAtual));
+		page.setDataPagamento(DataUtils.obterDataFormatada(dataAtual));
 		page.setDescricao("Segunda movimentação incluída de forma automática");
 		page.setInteressado("Eu mesmo");
 		page.setValor("1000");

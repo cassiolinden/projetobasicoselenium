@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.NoSuchElementException;
 
 import br.rs.cassiolinden.core.BaseTest;
 import br.rs.cassiolinden.core.DriverFactory;
@@ -25,6 +26,16 @@ public class ResumoTest extends BaseTest {
 	public void test2_testResumoMensal() {
 		page.abrirResumoMensal();
 		Assert.assertEquals("Seu Barriga - Extrato", DriverFactory.getDriver().getTitle());
+	}
+	
+	@Test
+	public void test3_verificarResumoVazio(){
+		page.abrirResumoMensal();
+		try {
+			page.removerMovimentacao();
+		}catch(NoSuchElementException ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 
 }
