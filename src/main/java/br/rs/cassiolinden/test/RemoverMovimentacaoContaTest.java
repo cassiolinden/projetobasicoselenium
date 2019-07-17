@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.rs.cassiolinden.core.BaseTest;
-import br.rs.cassiolinden.core.Propriedades;
 import br.rs.cassiolinden.pages.ContaPage;
 
 public class RemoverMovimentacaoContaTest extends BaseTest{
@@ -13,7 +12,7 @@ public class RemoverMovimentacaoContaTest extends BaseTest{
 	@Test
 	public void removerContaComMovimentacao() {
 		page.clicarListarContas();
-		page.removerConta(Propriedades.NOME_CONTA_ALTERADA);
+		page.removerConta("Conta com movimentacao");
 		Assert.assertEquals("Conta em uso na movimentações", page.obterMensagemErro());
 	}
 

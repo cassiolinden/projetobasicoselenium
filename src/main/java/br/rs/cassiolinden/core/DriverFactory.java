@@ -1,9 +1,16 @@
 package br.rs.cassiolinden.core;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import br.rs.cassiolinden.core.Propriedades.TipoExecucao;
 
 public class DriverFactory {
 	
@@ -23,13 +30,28 @@ public class DriverFactory {
 	
 	public static WebDriver initDriver(){
 		WebDriver driver = null;
-		switch (Propriedades.browser) {
+		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.LOCAL) {
+			switch (Propriedades.BROWSER) {
 			case FIREFOX:
 				driver = new FirefoxDriver(); break;
 			case CHROME:
 				driver = new ChromeDriver();
 				ChromeOptions co = new ChromeOptions();
 				co.addArguments("--start-maximized");
+		}
+		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.GRID) {
+			DesiredCapabilities cap = null;
+			switch (Propriedades.BROWSER) {
+				case FIREFOX: cap = DesiredCapabilities.firefox(); break;
+				case CHROME: cap = DesiredCapabilities.chrome(); break;
+			}
+			try {
+				driver = new RemoteWebDriver(new URL("http://192.168.1.22:4444/wd/hub"),cap);
+			} catch (MalformedURLException e) {
+				System.err.println("Falha na conexão com o Grid");
+				e.printStackTrace();
+			}
+		}
 		}
 		return driver;
 	}

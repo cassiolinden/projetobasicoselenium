@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import br.rs.cassiolinden.core.BaseTest;
-import br.rs.cassiolinden.core.Propriedades;
 import br.rs.cassiolinden.pages.MovimentacaoPage;
 import br.rs.cassiolinden.utils.DataUtils;
 
@@ -31,7 +30,7 @@ public class MovimentacaoTest extends BaseTest{
 		page.setDescricao("Segunda movimentação incluída de forma automática");
 		page.setInteressado("Eu mesmo");
 		page.setValor("1000");
-		page.setConta(Propriedades.NOME_CONTA_ALTERADA);
+		page.setConta("Conta para movimentacoes");
 		page.setSituacaoPago();
 		page.salvar();
 		Assert.assertEquals("Movimentação adicionada com sucesso!", page.obterMensagemSucesso());
@@ -150,7 +149,7 @@ public class MovimentacaoTest extends BaseTest{
 		page.setDescricao("Movimentação ");
 		page.setInteressado("Eu mesmo");
 		page.setValor("1000");
-		page.setConta(Propriedades.NOME_CONTA_ALTERADA);
+		page.setConta("Conta para movimentacoes");
 		page.setSituacaoPago(); 
 		page.salvar();
 		Assert.assertEquals("Data da Movimentação deve ser menor ou igual à data atual", page.obterMensagemErro());
