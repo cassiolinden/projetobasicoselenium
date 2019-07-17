@@ -2,6 +2,7 @@ br\rs\cassiolinden\core\DriverFactory$2.class
 br\rs\cassiolinden\pages\ResumoPage.class
 br\rs\cassiolinden\test\SaldoTest.class
 br\rs\cassiolinden\suites\SuiteGeral.class
+br\rs\cassiolinden\core\Propriedades$TipoExecucao.class
 br\rs\cassiolinden\test\MovimentacaoTest.class
 br\rs\cassiolinden\core\DriverFactory$1.class
 br\rs\cassiolinden\core\Propriedades.class

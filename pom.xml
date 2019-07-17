@@ -16,8 +16,8 @@
  				<includes>
  					<include>br/rs/cassiolinden/suites/*.java</include>
  				</includes>
-<!--  				<parallel>all</parallel> -->
-<!--  				<threadCount>1</threadCount> -->
+ 				<parallel>all</parallel>
+ 				<threadCount>3</threadCount>
  			</configuration>
  		</plugin>
  	</plugins>
