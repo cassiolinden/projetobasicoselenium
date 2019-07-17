@@ -38,7 +38,8 @@ public class DriverFactory {
 				driver = new ChromeDriver();
 				ChromeOptions co = new ChromeOptions();
 				co.addArguments("--start-maximized");
-		}
+				}
+			}
 		if(Propriedades.TIPO_EXECUCAO == TipoExecucao.GRID) {
 			DesiredCapabilities cap = null;
 			switch (Propriedades.BROWSER) {
@@ -46,12 +47,11 @@ public class DriverFactory {
 				case CHROME: cap = DesiredCapabilities.chrome(); break;
 			}
 			try {
-				driver = new RemoteWebDriver(new URL("http://192.168.1.22:4444/wd/hub"),cap);
+				driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
 			} catch (MalformedURLException e) {
-				System.err.println("Falha na conexão com o Grid");
+				System.out.println("Falha na conexão com o Grid");
 				e.printStackTrace();
 			}
-		}
 		}
 		return driver;
 	}
